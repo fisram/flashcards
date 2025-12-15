@@ -22,31 +22,31 @@ This project was built to solve a personal need for a simple, aesthetic study to
 The app follows a clear navigation flow centered around three main views.
 
 ```mermaid
-flowchart TD
-    %% Nodes
-    Start((User Opens App))
-    Library[View 1: Library Page]
-    SharedPrefs[(Local Storage)]
+flowchart LR
+    Start((User Opens App)) --> Library[View 1: Library Page]
     
-    subgraph Navigation
-        Library -->|Tap Deck| Study[View 2: Study Page]
-        Library -->|Tap +| AddDeck[Dialog: New Deck]
+    subgraph "Main Navigation"
+        Library -->|Tap + Button| AddDeck[Dialog: Create New Deck]
+        AddDeck -->|Save| Library
+        
+        Library -->|Tap a Deck| Study[View 2: Study Page]
     end
     
-    subgraph Study Logic
-        Study -->|Swipe| NextCard[Load Next Card]
-        Study -->|Tap Card| Flip[State: Flip Card]
-        Study -->|Tap X| Delete[Dialog: Delete Card]
+    subgraph "Study Loop"
+        Study -->|Swipe Left/Right| NextCard[Next Card Loads]
+        Study -->|Tap Card| Flip[State: Show Answer]
+        Flip -->|Tap Card| Unflip[State: Show Question]
+        
+        Study -->|Tap X Button| Delete[Dialog: Confirm Delete]
+        Delete -->|Confirm| RemoveCard[Remove from Memory]
     end
     
-    subgraph Data Flow
-        AddDeck -.->|Save| SharedPrefs
-        Delete -.->|Remove| SharedPrefs
-        AddCard[View 3: Add Card Screen] -.->|Save| SharedPrefs
+    subgraph "Creation Flow"
+        Study -->|Tap + Button| AddScreen[View 3: Add Card Screen]
+        AddScreen -->|Input Text| Validate{Check Length}
+        Validate -->|Valid| SaveDisk[Save to SharedPrefs]
+        SaveDisk --> Study
     end
-
-    Study -->|Tap +| AddCard
-    SharedPrefs -.->|Load Data| Library
 ```
 
 ## 🛠️ Tech Stack & Packages
@@ -86,7 +86,7 @@ The app utilizes the **Catppuccin** color palette for a soft, high-contrast look
 
 -----
 
-*Built with ❤️ in Flutter.*
+*Built with Flutter 🐦*
 
 ```
 ```
