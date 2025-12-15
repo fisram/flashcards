@@ -72,9 +72,8 @@ The app utilizes the **Catppuccin** color palette for a soft, high-contrast look
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/fisram/flashcards
     ```
-    *Note: Replace `<your-repo-url>` with your actual repository URL.*
 2.  **Install dependencies:**
     ```bash
     flutter pub get
@@ -87,6 +86,3 @@ The app utilizes the **Catppuccin** color palette for a soft, high-contrast look
 -----
 
 *Built with Flutter 🐦*
-
-```
-```
