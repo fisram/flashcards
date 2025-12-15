@@ -15,7 +15,7 @@ This project was built to solve a personal need for a simple, aesthetic study to
 * **🗑️ Delete Functionality:** Remove cards with a confirmation dialog via the X button on each card.
 * **🌗 Adaptive Theme:** Automatically switches between Light (Latte) and Dark (Macchiato) modes based on system settings using the Catppuccin color palette.
 * **💾 Persistent Storage:** All decks and cards are saved locally on the device using `SharedPreferences`.
-* **📐 Responsive Design:** Cards feature auto-sizing text to handle long questions or answers without breaking the UI.
+* **📐 Responsive Design:** Cards feature auto-sizing text to handle long strings without breaking the UI.
 
 ## 🏗️ App Architecture
 
@@ -25,23 +25,23 @@ The app follows a clear navigation flow centered around three main views.
 flowchart LR
     Start((User Opens App)) --> Library[View 1: Library Page]
     
-    subgraph "Main Navigation"
+    subgraph "View 1: Main Library"
         Library -->|Tap + Button| AddDeck[Dialog: Create New Deck]
         AddDeck -->|Save| Library
-        
-        Library -->|Tap a Deck| Study[View 2: Study Page]
     end
+
+    Library -->|Tap a Deck| Study[View 2: Study Page]
     
-    subgraph "Study Loop"
+    subgraph "View 2: Study Session"
         Study -->|Swipe Left/Right| NextCard[Next Card Loads]
-        Study -->|Tap Card| Flip[State: Show Answer]
+        Study -->|Tap Card| Flip[State: Flip Card]
         Flip -->|Tap Card| Unflip[State: Show Question]
         
         Study -->|Tap X Button| Delete[Dialog: Confirm Delete]
         Delete -->|Confirm| RemoveCard[Remove from Memory]
     end
     
-    subgraph "Creation Flow"
+    subgraph "View 3: Creation Flow"
         Study -->|Tap + Button| AddScreen[View 3: Add Card Screen]
         AddScreen -->|Input Text| Validate{Check Length}
         Validate -->|Valid| SaveDisk[Save to SharedPrefs]
