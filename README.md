@@ -1,4 +1,4 @@
-# Flashcard Pro 🎴
+# Flashcard
 
 A modern, gesture-based flashcard application built with Flutter. Designed to help users memorize concepts efficiently using a clean, distraction-free interface with "swipe-to-study" mechanics.
 
