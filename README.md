@@ -2,7 +2,8 @@
 
 A modern, gesture-based flashcard application built with Flutter. Designed to help users memorize concepts efficiently using a clean, distraction-free interface with "swipe-to-study" mechanics.
 
-![Project Status](https://img.shields.io/badge/status-active-success.svg)
+![Project Status][(https://img.shields.io/badge/status-active-success.svg)](https://img.shields.io/github/commit-activity/:interval/:user/:repo
+)
 ![Tech](https://img.shields.io/badge/built%20with-Flutter-blue.svg)
 
 ## 📖 Overview
@@ -84,7 +85,7 @@ LibraryPage:::main
 StudyPage:::main
 AddCardScreen:::main
 classDef main stroke-width:3px,font-weight:bold;
-AddDeckPopup@{ shape: subproc }---
+AddDeckPopup@{ shape: subproc }
 ```
 
 ## 🛠️ Tech Stack & Packages
