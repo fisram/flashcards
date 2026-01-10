@@ -22,31 +22,143 @@ This project was built to solve a personal need for a simple, aesthetic study to
 The app follows a clear navigation flow centered around three main views.
 
 ```mermaid
+---
+config:
+  layout: elk
+  theme: redux-dark
+title: App Interaction Flow
+---
 flowchart LR
-    Start((User Opens App)) --> Library[View 1: Library Page]
-    
-    subgraph "View 1: Main Library"
-        Library -->|Tap + Button| AddDeck[Dialog: Create New Deck]
-        AddDeck -->|Save| Library
-    end
-
-    Library -->|Tap a Deck| Study[View 2: Study Page]
-    
-    subgraph "View 2: Study Session"
-        Study -->|Swipe Left/Right| NextCard[Next Card Loads]
-        Study -->|Tap Card| Flip[State: Flip Card]
-        Flip -->|Tap Card| Unflip[State: Show Question]
-        
-        Study -->|Tap X Button| Delete[Dialog: Confirm Delete]
-        Delete -->|Confirm| RemoveCard[Remove from Memory]
-    end
-    
-    subgraph "View 3: Creation Flow"
-        Study -->|Tap + Button| AddScreen[View 3: Add Card Screen]
-        AddScreen -->|Input Text| Validate{Check Length}
-        Validate -->|Valid| SaveDisk[Save to SharedPrefs]
-        SaveDisk --> Study
-    end
+ subgraph MainLibrary["View 1: Main Library"]
+    direction LR
+        LibraryPage(["Library Page (Main)"])
+        DeckTile["Deck (List Item)"]
+        AddDeckBtn["＋ Add Deck"]
+        AddDeckPopup["Popup: Add New Deck"]
+        DeckName[/"Input: Deck Name"/]
+        CancelDeck["Cancel"]
+        CreateDeck["Create"]
+        SaveDeck["Save deck to list"]
+  end
+ subgraph StudySession["View 2: Study Session"]
+    direction LR
+        StudyPage(["Study Page (Main)"])
+        BackToLibrary["← Back"]
+        SwipeCard["Swipe: Next Card"]
+        DeleteBtn["✕ Delete Card"]
+        ConfirmDeletePopup[["Popup: Confirm Delete?"]]
+        DeleteCancel["Cancel"]
+        DeleteConfirm["Delete"]
+        AddCardBtn["＋ Add Card"]
+  end
+ subgraph CardCreation["View 3: Create Card"]
+    direction LR
+        AddCardScreen(["Add Card Screen (Main)"])
+        Form{{"Card form (Question + Answer)"}}
+        Question[/"Input: Question"/]
+        Answer[/"Input: Answer"/]
+        BackToStudy["← Back"]
+        AddToDeck["Add to Deck"]
+        Disabled["no input -&gt; add to deck disabled"]
+  end
+    Start(("User Opens App")) --> LibraryPage
+    LibraryPage --> DeckTile & AddDeckBtn
+    AddDeckBtn --> AddDeckPopup
+    AddDeckPopup --> DeckName & CancelDeck
+    DeckName --> CreateDeck
+    CancelDeck --> LibraryPage
+    CreateDeck --> SaveDeck
+    SaveDeck --> LibraryPage
+    StudyPage --> BackToLibrary & SwipeCard & DeleteBtn & AddCardBtn
+    SwipeCard --> StudyPage
+    DeleteBtn --> ConfirmDeletePopup
+    ConfirmDeletePopup --> DeleteCancel & DeleteConfirm
+    DeleteCancel --> StudyPage
+    DeleteConfirm --> StudyPage
+    AddCardScreen --> Question & Answer & BackToStudy
+    Question --> Form
+    Answer --> Form
+    Form -- valid --> AddToDeck
+    AddToDeck --> StudyPage
+    Form -- invalid --> Disabled
+    Disabled -.-> Form
+    BackToStudy --> StudyPage
+    DeckTile -- Tap deck --> StudyPage
+    BackToLibrary --> LibraryPage
+    AddCardBtn -- ＋ --> AddCardScreen
+LibraryPage:::main
+StudyPage:::main
+AddCardScreen:::main
+classDef main stroke-width:3px,font-weight:bold;
+AddDeckPopup@{ shape: subproc }---
+config:
+  layout: elk
+  theme: redux-dark
+title: App Interaction Flow
+---
+flowchart LR
+ subgraph MainLibrary["View 1: Main Library"]
+    direction LR
+        LibraryPage(["Library Page (Main)"])
+        DeckTile["Deck (List Item)"]
+        AddDeckBtn["＋ Add Deck"]
+        AddDeckPopup["Popup: Add New Deck"]
+        DeckName[/"Input: Deck Name"/]
+        CancelDeck["Cancel"]
+        CreateDeck["Create"]
+        SaveDeck["Save deck to list"]
+  end
+ subgraph StudySession["View 2: Study Session"]
+    direction LR
+        StudyPage(["Study Page (Main)"])
+        BackToLibrary["← Back"]
+        SwipeCard["Swipe: Next Card"]
+        DeleteBtn["✕ Delete Card"]
+        ConfirmDeletePopup[["Popup: Confirm Delete?"]]
+        DeleteCancel["Cancel"]
+        DeleteConfirm["Delete"]
+        AddCardBtn["＋ Add Card"]
+  end
+ subgraph CardCreation["View 3: Create Card"]
+    direction LR
+        AddCardScreen(["Add Card Screen (Main)"])
+        Form{{"Card form (Question + Answer)"}}
+        Question[/"Input: Question"/]
+        Answer[/"Input: Answer"/]
+        BackToStudy["← Back"]
+        AddToDeck["Add to Deck"]
+        Disabled["no input -&gt; add to deck disabled"]
+  end
+    Start(("User Opens App")) --> LibraryPage
+    LibraryPage --> DeckTile & AddDeckBtn
+    AddDeckBtn --> AddDeckPopup
+    AddDeckPopup --> DeckName & CancelDeck
+    DeckName --> CreateDeck
+    CancelDeck --> LibraryPage
+    CreateDeck --> SaveDeck
+    SaveDeck --> LibraryPage
+    StudyPage --> BackToLibrary & SwipeCard & DeleteBtn & AddCardBtn
+    SwipeCard --> StudyPage
+    DeleteBtn --> ConfirmDeletePopup
+    ConfirmDeletePopup --> DeleteCancel & DeleteConfirm
+    DeleteCancel --> StudyPage
+    DeleteConfirm --> StudyPage
+    AddCardScreen --> Question & Answer & BackToStudy
+    Question --> Form
+    Answer --> Form
+    Form -- valid --> AddToDeck
+    AddToDeck --> StudyPage
+    Form -- invalid --> Disabled
+    Disabled -.-> Form
+    BackToStudy --> StudyPage
+    DeckTile -- Tap deck --> StudyPage
+    BackToLibrary --> LibraryPage
+    AddCardBtn -- ＋ --> AddCardScreen
+LibraryPage:::main
+StudyPage:::main
+AddCardScreen:::main
+classDef main stroke-width:3px,font-weight:bold;
+AddDeckPopup@{ shape: subproc }
 ```
 
 ## 🛠️ Tech Stack & Packages
