@@ -22,12 +22,6 @@ This project was built to solve a personal need for a simple, aesthetic study to
 The app follows a clear navigation flow centered around three main views.
 
 ```mermaid
----
-config:
-  layout: elk
-  theme: redux-dark
-title: App Interaction Flow
----
 flowchart LR
  subgraph MainLibrary["View 1: Main Library"]
     direction LR
